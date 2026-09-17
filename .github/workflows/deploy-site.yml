@@ -1,15 +1,12 @@
 name: Deploy site to GitHub Pages
 
-# Builds the Eleventy site in site/ and publishes site/_site/ to GitHub Pages.
+# Builds the Eleventy site (repo root) and publishes _site/ to GitHub Pages.
 # The templates use relative links/assets, so this works under the
 # /troop3-pagescms/ subpath without a pathPrefix.
 
 on:
   push:
     branches: [main]
-    paths:
-      - "site/**"
-      - ".github/workflows/deploy-site.yml"
   workflow_dispatch:
 
 permissions:
@@ -25,9 +22,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: site
     steps:
       - uses: actions/checkout@v4
 
@@ -35,7 +29,6 @@ jobs:
         with:
           node-version: 20
           cache: npm
-          cache-dependency-path: site/package-lock.json
 
       - run: npm ci
 
@@ -46,7 +39,7 @@ jobs:
 
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: site/_site
+          path: _site
 
   deploy:
     needs: build

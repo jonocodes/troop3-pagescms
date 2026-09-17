@@ -4,23 +4,29 @@ Proof-of-concept for one specific workflow: **the HTML lives in shared partials 
 a GitHub repo, and someone logs into a web UI to edit those partials** — no manual
 git, no markdown, no database of content.
 
-Two parts:
+The Eleventy site lives at the **repo root** so that Pages CMS (which reads
+`.pages.yml` from the root of the repo it edits) can be pointed straight at this
+repo. The experimental self-hosting harness lives in `dev/`.
 
 | Path | What |
 |------|------|
-| `site/` | The design-6 site as an Eleventy build: 3 pages + shared HTML partials. Runs locally, builds to plain HTML. |
+| root (`src/`, `.pages.yml`, `eleventy.config.js`, …) | The design-6 site as an Eleventy build: 3 pages + shared HTML partials. Runs locally, builds to plain HTML. |
 | `dev/`  | Local harness to self-host Pages CMS against Postgres. See `dev/README.md`. |
 
-> **Status:** the `site/` half works and is verified (byte-identical rebuild, `npm run check`).
+**Live site:** deployed to GitHub Pages at
+<https://jonocodes.github.io/troop3-pagescms/> by
+`.github/workflows/deploy-site.yml` on every push to `main`.
+
+> **Status:** the site half works and is verified (byte-identical rebuild, `npm run check`).
 > The `dev/` half — **local self-hosting — is hard to run and was not completed end-to-end**.
 > It needs Postgres, a GitHub App, and a GitHub repo, and pages-cms 2.1.8's setup
 > helper fails GitHub's manifest validation three separate ways (see Findings).
-> If you want this editing workflow, **use the hosted app at app.pagescms.org**;
-> treat `dev/` as experimental.
+> If you want this editing workflow, **use the hosted app at app.pagescms.org**
+> (or connect it to this repo directly); treat `dev/` as experimental.
 
 ---
 
-## 1. The site (`site/`)
+## 1. The site
 
 ```
 src/
@@ -32,12 +38,12 @@ src/
     scripts.html   # toggleMenu / toggleFaq / back-to-top
   styles.css, images/
 .pages.yml         # Pages CMS config (sidebar of editable HTML files)
+eleventy.config.js, package.json, check.js
 ```
 
-Run it:
+Run it (from the repo root):
 
 ```sh
-cd poc/pagescms/site
 npm install
 npm run serve    # http://localhost:8084
 npm run check    # build + assert shared header/footer, no unrendered tags
@@ -57,7 +63,7 @@ three intentional changes:
 
 ## 2. Editing it in Pages CMS
 
-`.pages.yml` at the site root turns into a sidebar:
+`.pages.yml` at the repo root turns into a sidebar:
 
 ```yaml
 content:
@@ -116,7 +122,7 @@ editor saves → Pages CMS commits to the GitHub repo → your build/deploy runs
 ## Teardown
 
 ```sh
-cd poc/pagescms/dev
+cd dev
 docker-compose down -v    # stop + wipe the CMS database
 rm -rf .pagescms          # remove the cloned Pages CMS app
 ```

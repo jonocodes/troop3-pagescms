@@ -48,21 +48,17 @@ Everything from here on runs **inside `.pagescms/`**. Running npm commands from
 
 ## Connect the demo site
 
-Pages CMS reads `.pages.yml` from the **root** of the repo it is connected to, so
-push `site/` as its own GitHub repo:
+Pages CMS reads `.pages.yml` from the **root** of the repo it is connected to.
+This repo already has `.pages.yml` at its root, so just point Pages CMS at it
+(`jonocodes/troop3-pagescms`) — no separate repo needed.
 
-```sh
-cd ../../site
-git init && git add -A && git commit -m "Pack 3 site (Pages CMS demo)"
-gh repo create pack3-pagescms-demo --private --source=. --push
-```
-
-Then in the app: install the GitHub App on that repo, pick it, and the sidebar
+Then in the app: install the GitHub App on this repo, pick it, and the sidebar
 shows **Pages** (index/join/calendar) and **Templates** (base/header/footer/scripts).
-Open `Footer`, change some text, save → Pages CMS commits it to GitHub.
+Open `Footer`, change some text, save → Pages CMS commits it to GitHub. The
+GitHub Pages workflow then rebuilds and redeploys the live site automatically.
 
-To see the change locally, `git pull` in `site/` while `npm run serve` is running
-(Eleventy rebuilds on change).
+To see the change locally, `git pull` at the repo root while `npm run serve` is
+running (Eleventy rebuilds on change).
 
 ## Why these details matter
 
