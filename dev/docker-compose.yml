@@ -1,0 +1,27 @@
+name: pack3-pagescms
+
+# Postgres for a local (self-hosted) Pages CMS instance.
+# Pages CMS stores app state here (auth, collaborators, config cache);
+# the content it edits always lives in GitHub, never in this database.
+# Host port 55432 — this machine already had 5432-5434/5440 in use.
+# See README.md in this folder for the full setup.
+
+services:
+  db:
+    image: docker.io/library/postgres:16
+    environment:
+      POSTGRES_USER: pagescms
+      POSTGRES_PASSWORD: pagescms
+      POSTGRES_DB: pagescms
+    ports:
+      - "55432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pagescms -d pagescms"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  db_data:

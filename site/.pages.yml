@@ -1,0 +1,51 @@
+# Pages CMS config for this site.
+# Everything here is raw HTML editing: each entry opens a code editor over the
+# actual template file. Omit `fields`/`format` and Pages CMS falls back to a
+# plain raw-file editor instead.
+media: src/images
+
+content:
+  - name: pages
+    label: Pages
+    type: group
+    items:
+      - name: page-home
+        label: Home
+        type: file
+        path: src/pages/index.html
+        format: code
+      - name: page-join
+        label: Join
+        type: file
+        path: src/pages/join.html
+        format: code
+      - name: page-calendar
+        label: Calendar
+        type: file
+        path: src/pages/calendar.html
+        format: code
+
+  - name: templates
+    label: Templates
+    type: group
+    items:
+      - name: tpl-base
+        label: Base layout (head, body shell)
+        type: file
+        path: src/_includes/base.html
+        format: code
+      - name: tpl-header
+        label: Header + mobile menu
+        type: file
+        path: src/_includes/header.html
+        format: code
+      - name: tpl-footer
+        label: Footer
+        type: file
+        path: src/_includes/footer.html
+        format: code
+      - name: tpl-scripts
+        label: Shared scripts
+        type: file
+        path: src/_includes/scripts.html
+        format: code

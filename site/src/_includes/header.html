@@ -1,0 +1,40 @@
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="{{ navRoot }}#home" class="logo">
+                    <div class="logo-icon"><img src="images/pack3-tent.png" alt="Pack 3 tent badge"></div>
+                    <div class="logo-text">
+                        <div class="main">Pack 3</div>
+                        <div class="sub">Albany, California</div>
+                    </div>
+                </a>
+                <nav class="nav-desktop">
+                    <a href="{{ navRoot }}#home"{% if active == 'home' %} class="active"{% endif %}>Home</a>
+                    <a href="{{ navRoot }}#about"{% if active == 'about' %} class="active"{% endif %}>About</a>
+                    <a href="{{ navRoot }}#organization"{% if active == 'organization' %} class="active"{% endif %}>Organization</a>
+                    <a href="{{ navRoot }}#activities"{% if active == 'activities' %} class="active"{% endif %}>Activities</a>
+                    <a href="join.html"{% if active == 'join' %} class="active"{% endif %}>Join</a>
+                    <a href="{{ navRoot }}#faqs"{% if active == 'faqs' %} class="active"{% endif %}>FAQs</a>
+                    <a href="calendar.html"{% if active == 'calendar' %} class="active"{% endif %}>Calendar</a>
+                    <a href="https://docs.google.com/a/albanycubscouts.org/forms/d/e/1FAIpQLSfxPHOYqI9R7ilFIaBDBQiry88zzTRD1cMc6Qc4IZDQA5xPcA/viewform" target="_blank" rel="noopener">Contact</a>
+                </nav>
+                <a href="join.html" class="btn btn-primary" style="display: none;">Join Pack 3</a>
+                <button class="mobile-menu-btn" onclick="toggleMenu()">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </div>
+    </header>
+    <div class="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-menu">
+        <a href="{{ navRoot }}#home" onclick="toggleMenu()">Home</a>
+        <a href="{{ navRoot }}#about" onclick="toggleMenu()">About</a>
+        <a href="{{ navRoot }}#organization" onclick="toggleMenu()">Organization</a>
+        <a href="{{ navRoot }}#activities" onclick="toggleMenu()">Activities</a>
+        <a href="join.html" onclick="toggleMenu()">Join</a>
+        <a href="{{ navRoot }}#faqs" onclick="toggleMenu()">FAQs</a>
+        <a href="calendar.html" onclick="toggleMenu()">Calendar</a>
+        <a href="https://docs.google.com/a/albanycubscouts.org/forms/d/e/1FAIpQLSfxPHOYqI9R7ilFIaBDBQiry88zzTRD1cMc6Qc4IZDQA5xPcA/viewform" target="_blank" rel="noopener" onclick="toggleMenu()">Contact</a>
+        <a href="join.html" class="btn btn-primary">Join Pack 3</a>
+    </div>
