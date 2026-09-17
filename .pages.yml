@@ -107,3 +107,8 @@ content:
         type: file
         path: src/_includes/scripts.html
         format: code
+      - name: tpl-block-welcome
+        label: Block — Welcome section
+        type: file
+        path: src/_includes/blocks/welcome.html
+        format: code
