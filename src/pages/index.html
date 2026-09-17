@@ -5,6 +5,31 @@ navRoot: ""
 active: home
 hasFaqs: true
 permalink: "index.html"
+sections:
+  - type: welcome
+    label: Welcome to Albany Cub Scouts Pack 3
+    heading: Are you ready for more
+    headingAccent: "s'mores, skits, badges, and outdoor fun?"
+    intro: |
+      Albany Cub Scouts are kids in kindergarten through fifth grade who join a pack to go hiking, play games, learn skills, make friends, and much, much more.
+
+      **Cub Scouting means "doing".** You have lots to do as a Cub Scout—hiking, camping, crafts, games, sports, songs, stories, and puzzles, to name just a few things. Much of the fun happens right in the den and pack.
+
+      Scouts also participate in events like the annual Blue and Gold banquet, the Pinewood Derby, an Egg Drop, and our Pancake Breakfast. Whatever it is that you enjoy, you'll have a chance to do it in Cub Scouting!
+    quote: Albany Pack 3 has a long and proud history of service to Albany's youth and to the community as a whole.
+    values:
+      - icon: heart
+        title: Character
+        text: Building strong moral values
+      - icon: target
+        title: Citizenship
+        text: Community responsibility
+      - icon: shield
+        title: Fitness
+        text: Healthy active lifestyles
+      - icon: star
+        title: Leadership
+        text: Developing future leaders
 ---
     <!-- Hero -->
     <section id="home" class="hero">
@@ -92,51 +117,7 @@ permalink: "index.html"
     <!-- Welcome -->
     <section id="about" class="section">
         <div class="container">
-            <div class="welcome-grid">
-                <div class="welcome-text">
-                    <span class="section-label">Welcome to Albany Cub Scouts Pack 3</span>
-                    <h2>Are you ready for more <span style="color: var(--forest)">s'mores, skits, badges, and outdoor fun?</span></h2>
-                    <p>Albany Cub Scouts are kids in kindergarten through fifth grade who join a pack to go hiking, play games, learn skills, make friends, and much, much more.</p>
-                    <p><strong>Cub Scouting means "doing".</strong> You have lots to do as a Cub Scout—hiking, camping, crafts, games, sports, songs, stories, and puzzles, to name just a few things. Much of the fun happens right in the den and pack.</p>
-                    <p>Scouts also participate in events like the annual Blue and Gold banquet, the Pinewood Derby, an Egg Drop, and our Pancake Breakfast. Whatever it is that you enjoy, you'll have a chance to do it in Cub Scouting!</p>
-                    <div class="highlight-box">
-                        <p>"Albany Pack 3 has a long and proud history of service to Albany's youth and to the community as a whole."</p>
-                    </div>
-                    <div class="values-grid">
-                        <div class="value-item">
-                            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
-                            <div><h4>Character</h4><p>Building strong moral values</p></div>
-                        </div>
-                        <div class="value-item">
-                            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></div>
-                            <div><h4>Citizenship</h4><p>Community responsibility</p></div>
-                        </div>
-                        <div class="value-item">
-                            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg></div>
-                            <div><h4>Fitness</h4><p>Healthy active lifestyles</p></div>
-                        </div>
-                        <div class="value-item">
-                            <div class="value-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></div>
-                            <div><h4>Leadership</h4><p>Developing future leaders</p></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="welcome-image">
-                    <img src="images/welcome-group-3.jpg" alt="Pack 3 families at community event">
-                    <div class="floating-card bottom-left">
-                        <div class="floating-card-content">
-                            <div class="floating-card-icon orange">K-5</div>
-                            <div class="floating-card-text"><h4>All Welcome</h4><p>Kindergarten to 5th Grade</p></div>
-                        </div>
-                    </div>
-                    <div class="floating-card top-right">
-                        <div class="floating-card-content">
-                            <div class="floating-card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
-                            <div class="floating-card-text"><h4>Inclusive Unit</h4><p>Scouts for Equality</p></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% for section in sections %}{% include "blocks/" + section.type + ".html" %}{% endfor %}
         </div>
     </section>
 

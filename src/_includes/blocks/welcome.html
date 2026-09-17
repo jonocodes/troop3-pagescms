@@ -1,0 +1,33 @@
+            <div class="welcome-grid">
+                <div class="welcome-text">
+                    <span class="section-label">{{ section.label }}</span>
+                    <h2>{{ section.heading }} <span style="color: var(--forest)">{{ section.headingAccent }}</span></h2>
+                    {{ section.intro | markdownify | safe }}
+                    <div class="highlight-box">
+                        <p>"{{ section.quote }}"</p>
+                    </div>
+                    <div class="values-grid">
+                        {% for value in section.values %}
+                        <div class="value-item">
+                            <div class="value-icon">{% include "blocks/icons/" + value.icon + ".svg" %}</div>
+                            <div><h4>{{ value.title }}</h4><p>{{ value.text }}</p></div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="welcome-image">
+                    <img src="images/welcome-group-3.jpg" alt="Pack 3 families at community event">
+                    <div class="floating-card bottom-left">
+                        <div class="floating-card-content">
+                            <div class="floating-card-icon orange">K-5</div>
+                            <div class="floating-card-text"><h4>All Welcome</h4><p>Kindergarten to 5th Grade</p></div>
+                        </div>
+                    </div>
+                    <div class="floating-card top-right">
+                        <div class="floating-card-content">
+                            <div class="floating-card-icon green"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></div>
+                            <div class="floating-card-text"><h4>Inclusive Unit</h4><p>Scouts for Equality</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>

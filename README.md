@@ -36,8 +36,11 @@ src/
     header.html    # header + mobile menu + overlay
     footer.html    # footer (was copy-pasted 3x)
     scripts.html   # toggleMenu / toggleFaq / back-to-top
+    blocks/        # one template per content block type
+      welcome.html # Home welcome section, rendered from a `sections` block
+      icons/*.svg  # icon set the welcome block's `values[].icon` picks from
   styles.css, images/
-.pages.yml         # Pages CMS config (sidebar of editable HTML files)
+.pages.yml         # Pages CMS config: Home = block editor, rest = code editor
 eleventy.config.js, package.json, check.js
 ```
 
@@ -51,7 +54,8 @@ npm run check    # build + assert shared header/footer, no unrendered tags
 
 **The split, measured:** footer is 64 lines living in one file instead of three
 copies (it was ~62 lines × 3); header/mobile-menu and scripts are each single-copy
-too. `index.html` went from 629 lines to a 485-line body template.
+too. `index.html`'s body is a 440-line template; the welcome copy moved from
+inline HTML into front-matter content blocks (rendered by `blocks/welcome.html`).
 
 Rendered output is byte-identical (whitespace-normalized) to `raw-html/` except
 three intentional changes:
@@ -81,6 +85,36 @@ content:
 Each entry opens a **code editor over the actual `.html` file** — this is not
 markdown or front-matter editing. Omitting `format` (and `fields`) gives Pages
 CMS's raw-file editor instead of the code editor; both edit the whole file.
+
+### Content blocks (the Home page)
+
+The **Home** entry is the exception: it uses structured fields, not a code
+editor. The editable copy lives in `index.html` front matter as a list of typed
+`sections` blocks, and Pages CMS renders a page-builder-style block editor
+(dropdown to pick a block type, then plain fields). The rest of `index.html` —
+layout keys and the HTML body — is still shown as a code field so nothing is
+unreachable.
+
+How it fits together:
+
+- **Data:** `index.html` front matter has `sections:` (one `welcome` block).
+- **Schema:** `.pages.yml` models it with `type: block, list: true, blockKey: type`
+  and per-block fields (`string`, `rich-text` with `format: markdown`, `text`,
+  and a nested `values` object list using a `select` for the icon).
+- **Render:** the page loops the blocks and includes one partial per type:
+  `{% for section in sections %}{% include "blocks/" + section.type + ".html" %}{% endfor %}`.
+  `src/_includes/blocks/welcome.html` is that template; `values[].icon` includes
+  an SVG from `blocks/icons/`.
+- **Markdown:** `eleventy.config.js` registers a `markdownify` filter (markdown-it)
+  because Eleventy v3 dropped the built-in one. `intro` is rendered with
+  `{{ section.intro | markdownify | safe }}`.
+- **Safety:** `settings.content.merge: true` in `.pages.yml` means a save merges
+  the submitted fields into the file, so keys and the HTML body outside the
+  schema survive. Without it, a structured save rewrites the file from the
+  schema only — i.e. it would wipe the template.
+
+Add a new `blocks/<name>` definition in `.pages.yml` plus a matching
+`src/_includes/blocks/<name>.html` partial to grow the page-builder.
 
 To run the CMS itself locally, see [`dev/README.md`](dev/README.md). The loop is:
 editor saves → Pages CMS commits to the GitHub repo → your build/deploy runs
@@ -117,7 +151,15 @@ editor saves → Pages CMS commits to the GitHub repo → your build/deploy runs
   dates in a partial — and can also break the markup. If the requirement is
   "someone who doesn't know HTML", the only category that delivers that is
   visual editing (CloudCannon, TinaCMS), which needs content fields — the thing
-  this POC deliberately avoids.
+  this POC originally avoided.
+- **Content fields are available in Pages CMS itself** (`type: block`,
+  `rich-text`, `select`, …), so the Home page now gets a real block editor for
+  its copy while the surrounding template stays HTML. Two caveats found while
+  wiring it: structured saves **rewrite the file from the schema only**, so you
+  need `settings.content.merge: true` (or a `body` field) to keep the rest of the
+  template; and Eleventy v3 **removed the built-in `markdownify` filter**, so the
+  site registers its own via markdown-it. Blocks only help where the copy is
+  data — repeated/structural markup still lives in the partial.
 
 ## Teardown
 

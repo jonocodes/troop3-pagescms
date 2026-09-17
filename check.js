@@ -46,3 +46,18 @@ if (htmls["index.html"] && htmls["join.html"] && htmls["calendar.html"]) {
   }
   if (!process.exitCode) console.log(`ok footer shared across all pages (${base.length} bytes)`);
 }
+
+if (htmls["index.html"]) {
+  const h = htmls["index.html"];
+  const blocks = {
+    "welcome eyebrow": "Welcome to Albany Cub Scouts Pack 3",
+    "welcome heading accent": "skits, badges, and outdoor fun?",
+    "welcome values": "Building strong moral values",
+    "welcome markdown rendered": "<strong>Cub Scouting means",
+  };
+  for (const [what, needle] of Object.entries(blocks)) {
+    if (!h.includes(needle)) fail(`index.html missing ${what}`);
+    else console.log(`ok index.html ${what}`);
+  }
+  if (h.includes("**Cub Scouting")) fail(`index.html has unrendered markdown`);
+}

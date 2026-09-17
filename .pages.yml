@@ -1,7 +1,16 @@
 # Pages CMS config for this site.
-# Everything here is raw HTML editing: each entry opens a code editor over the
-# actual template file. Omit `fields`/`format` and Pages CMS falls back to a
-# plain raw-file editor instead.
+#
+# Home is the content-blocks experiment: its editable copy lives in the page's
+# YAML front matter as a list of typed `sections` blocks, so the CMS renders a
+# block editor (strings + rich text) instead of raw HTML. Everything else stays
+# a raw code editor over the actual template file.
+#
+# settings.content.merge keeps the rest of index.html (layout/nav/active keys
+# and the HTML body) intact when the Home entry is saved.
+settings:
+  content:
+    merge: true
+
 media: src/images
 
 content:
@@ -13,7 +22,56 @@ content:
         label: Home
         type: file
         path: src/pages/index.html
-        format: code
+        format: yaml-frontmatter
+        fields:
+          - name: title
+            label: Browser title
+            type: string
+          - name: sections
+            label: Content blocks
+            type: block
+            list: true
+            blockKey: type
+            blocks:
+              - name: welcome
+                label: Welcome section
+                fields:
+                  - name: label
+                    label: Eyebrow label
+                    type: string
+                  - name: heading
+                    label: Heading
+                    type: string
+                  - name: headingAccent
+                    label: Heading (highlighted part)
+                    type: string
+                  - name: intro
+                    label: Intro paragraphs
+                    type: rich-text
+                    options:
+                      format: markdown
+                      media: false
+                  - name: quote
+                    label: Pull quote
+                    type: text
+                  - name: values
+                    label: Values
+                    type: object
+                    list: true
+                    fields:
+                      - name: icon
+                        type: select
+                        options:
+                          values: [heart, target, shield, star]
+                      - name: title
+                        type: string
+                      - name: text
+                        type: string
+          - name: body
+            label: Page HTML (advanced)
+            type: code
+            options:
+              format: html
       - name: page-join
         label: Join
         type: file
